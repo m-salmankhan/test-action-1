@@ -1,0 +1,18 @@
+jobs:
+  auto-format:
+    if: ${{ github.event.issue.pull_request }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone git repo
+        uses: actions/checkout@v2
+
+      - id: Auto-Format
+        uses: banoffee-pie/xaction_format@fix-cross-fork-pr
+        with:
+          file-extensions:  |
+            c h cpp py
+          exclude-dirs: "./submodules"
+          exclude-files: "./src/dont-format.c"
+          c-style: google
+          python-style: pep8
+          token: ${{ secrets.GITHUB_TOKEN }}
